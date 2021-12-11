@@ -7,6 +7,15 @@ import numpy as np
 
 np.seterr(divide='ignore', invalid='ignore')
 
+
+def euclidean_distance(x1, x2):
+    return np.linalg.norm(x1 - x2)
+
+
+def manhattan_distance(x1, x2):
+    return np.sum(np.array([np.abs(i - j) for i, j in zip(x1, x2)]))
+
+
 def identity(x, derivative=False):
     return np.ones(shape=x.shape, dtype=float) if derivative else x
 
@@ -40,8 +49,13 @@ def cross_entropy(y, p):
 
 
 def one_hot_encoding(y):
-    one_hot_encoded = np.zeros(shape=(len(y), len(set(y))), dtype=int)
+    labels = set(y)
+    encoding_lookup = {label: num_code for num_code, label in
+                       enumerate(sorted(labels))}  # Assign the labels a numeric code
+    one_hot_encoded = np.zeros(shape=(len(y), len(labels)), dtype=int)
     yT = np.array([y]).T  # Convert to shape=(n_samples,1)
+
     for idx, row in enumerate(yT):
-        one_hot_encoded[idx, row[0]] = 1
+        one_hot_encoded[idx, encoding_lookup[row[0]]] = 1
+
     return one_hot_encoded
