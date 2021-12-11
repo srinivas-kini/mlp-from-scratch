@@ -7,15 +7,6 @@ import numpy as np
 
 np.seterr(divide='ignore', invalid='ignore')
 
-
-def euclidean_distance(x1, x2):
-    return np.linalg.norm(x1 - x2)
-
-
-def manhattan_distance(x1, x2):
-    return np.sum(np.array([np.abs(i - j) for i, j in zip(x1, x2)]))
-
-
 def identity(x, derivative=False):
     return np.ones(shape=x.shape, dtype=float) if derivative else x
 
